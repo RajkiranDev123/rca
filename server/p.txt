@@ -1,0 +1,18 @@
+npm init -y
+npm i express
+npm i --save-dev nodemon
+npm i dotenv
+npm i mongoose
+
+https://downloads.mongodb.com/compass/mongodb-compass-1.45.1-win32-x64.msi
+co pa in MongoDB Compass : mongodb+srv://raje:rajdb@rajcluster.ypsslv5.mongodb.net
+
+ npm i bcryptjs
+ npm i jsonwebtoken
+
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/RajkiranDev123/rca.git
+git push -u origin main
