@@ -16,3 +16,5 @@ git commit -m "first commit"
 git branch -M main
 git remote add origin https://github.com/RajkiranDev123/rca.git
 git push -u origin main
+
+npm i cors

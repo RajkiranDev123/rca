@@ -5,6 +5,10 @@ import jwt from "jsonwebtoken"
 /////////////////////////////////// signup ///////////////////////////
 export const signUp = async (req, res) => {
     try {
+        const { firstname, lastname, email, password } = req.body
+        if (!firstname || !lastname || !email || !password) {
+            return res.status(400).json({ message: "All fields are required!", success: false })
+        }
         const user = await UserModel.findOne({ email: req.body.email })
         if (user) {
             return res.status(400).json({ message: "User already exists!", success: false })
@@ -28,7 +32,12 @@ export const signUp = async (req, res) => {
 /////////////////////////////////// login ///////////////////////////
 export const login = async (req, res) => {
     try {
+        const { email, password } = req.body
+        if (!email || !password) {
+            return res.status(400).json({ message: "Both fields are required!", success: false })
+        }
         const user = await UserModel.findOne({ email: req.body.email }).select("+password")
+
         if (!user) {
             return res.status(400).json({ message: "User does not exists!", success: false })
         }
