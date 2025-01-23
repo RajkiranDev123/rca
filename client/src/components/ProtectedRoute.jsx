@@ -2,8 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getLoggedUser } from '../apiCalls/user'
 
+import { useDispatch } from "react-redux"
+import { setUser } from "../redux/userSlice"
+
 const ProtectedRoute = ({ children }) => {
-    const [user, setUser] = useState(null)
+    const dispatch = useDispatch()
+
     const navigate = useNavigate()
 
     const getLoggedInUser = async () => {
@@ -11,7 +15,7 @@ const ProtectedRoute = ({ children }) => {
         try {
             response = await getLoggedUser()
             if (response.success) {
-                setUser(response.data)
+                dispatch(setUser(response.data))
             } else {
                 navigate("/login")
             }
@@ -29,9 +33,7 @@ const ProtectedRoute = ({ children }) => {
     }, [])
     return (
         <div>
-            <p>Name : {user?.firstname + " " + user?.lastname}</p>
-            <p>Email : {user?.email}</p>
-            <br />
+ 
             {children}
         </div>
     )

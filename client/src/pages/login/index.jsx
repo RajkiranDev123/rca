@@ -3,7 +3,11 @@ import { Link, useNavigate } from "react-router-dom"
 import { loginUser } from '../../apiCalls/auth'
 import toast from 'react-hot-toast';
 
+import { useDispatch } from "react-redux"
+import { showLoader, hideLoader } from '../../redux/loaderSlice';
+
 const Login = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const [user, setUser] = useState({
     email: "",
@@ -12,8 +16,8 @@ const Login = () => {
   const onFormSubmit = async (e) => {
     e.preventDefault()
     try {
+      dispatch(showLoader())
       const response = await loginUser(user)
-
       if (response.success) {
         localStorage.setItem("token", response.token)
 
@@ -21,7 +25,9 @@ const Login = () => {
         navigate("/")
       }
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error(error.response.data.message || error)
+    } finally {
+      dispatch(hideLoader())
     }
   }
   return (

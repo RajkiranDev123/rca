@@ -3,7 +3,11 @@ import { Link } from "react-router-dom"
 import { signUpUser } from '../../apiCalls/auth'
 import toast from 'react-hot-toast';
 
+import { useDispatch } from "react-redux"
+import { showLoader, hideLoader } from '../../redux/loaderSlice';
 const Signup = () => {
+  const dispatch = useDispatch()
+
   const [user, setUser] = useState({
     firstname: "",
     lastname: "",
@@ -13,6 +17,8 @@ const Signup = () => {
   const onFormSubmit = async (e) => {
     e.preventDefault()
     try {
+      dispatch(showLoader())
+
       const response = await signUpUser(user)
 
       if (response.success) {
@@ -20,6 +26,9 @@ const Signup = () => {
       }
     } catch (error) {
       toast.error(error.response.data.message)
+    } finally {
+      dispatch(hideLoader())
+
     }
 
   }
